@@ -2,29 +2,46 @@
 Servo servo;
 
 int servoPin = 13;
-int off = 0;
-int on = 180;
-int currentPos = off;
+int servoPin1 = 25;
+
+int topoff = 0;
+int topon = 35;
+
+int bottomon = 35;
+int bottomoff = 0;
+
+int currentPosTop = topoff;
+int currentPosBottom = bottomon;
 
 void setup() {
   Serial.begin(115200);
   servo.attach(servoPin);
+  servo.attach(servoPin1);
   randomSeed(analogRead(0));
-  Serial.println("SG90 servo oscillation test...");
-  servo.write(currentPos);
+  servo.write(currentPosTop);
 }
 
 void loop() {
   int randomNum = random(1, 11);
   Serial.print("Random number: ");
   Serial.println(randomNum);
-
+  currentPosTop = topon;
+  currentPosBottom = bottomoff;
+  
   if (randomNum == 5) {
-    currentPos = off;
+    currentPosTop = topoff;
+    currentPosBottom = bottomon;
   } else {
-    currentPos = on;
+    currentPosTop = topon;
+    currentPosBottom = bottomoff;
   }
 
-  servo.write(currentPos);
-  delay(10000);  // wait 10 seconds
+  servo.write(currentPosTop);
+  servo.write(currentPosBottom);
+  delay(2000);  // wait 2 seconds
+  // currentPosTop = topoff;
+  // currentPosBottom = bottomon;
+  // servo.write(currentPosTop);
+  // servo.write(currentPosBottom);
+  // delay(2000);
 }
